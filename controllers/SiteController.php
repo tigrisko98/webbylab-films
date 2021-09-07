@@ -1,5 +1,6 @@
 <?php
 require_once('components/Parser.php');
+require_once('models/Film.php');
 
 class SiteController
 {
@@ -7,6 +8,7 @@ class SiteController
     {
         if (isset($_POST['submit'])) {
             $parsedFile = Parser::parseFile($_FILES['text']['tmp_name']);
+            $executeQuery = (new Film())->batchInsert($parsedFile);
         }
         require_once('views/site/index.php');
         return true;
