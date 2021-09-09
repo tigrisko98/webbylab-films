@@ -6,9 +6,12 @@ class SiteController
 {
     public function actionIndex()
     {
+        $films = new Film();
+        $filmsList = $films->getFilmsList();
         if (isset($_POST['submit'])) {
             $parsedFile = Parser::parseFile($_FILES['text']['tmp_name']);
-            $executeQuery = (new Film())->batchInsert($parsedFile);
+            $executeQuery = $films->batchInsert($parsedFile);
+            header("Location:/");
         }
         require_once('views/site/index.php');
         return true;
