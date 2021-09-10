@@ -16,16 +16,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#uploadFilmsModal">
-                        Import films
+                    <a href="/film/create" class="nav-link text-white">
+                        Create film
                     </a>
                 </li>
-
-               <!-- <li>
-                    <a href="/book/create" class="nav-link text-white">
-                        Добавить книгу
-                    </a>
-                </li> -->
             </ul>
         </div>
     </div>

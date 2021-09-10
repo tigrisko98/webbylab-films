@@ -28,6 +28,7 @@ class Film
             $this->db->beginTransaction();
             foreach ($parsedData as $row) {
                 $stmt->execute($row);
+
             }
             $this->db->commit();
         } catch (Exception $e) {
@@ -35,5 +36,21 @@ class Film
             throw $e;
         }
         return true;
+    }
+
+    public function createFilm($options)
+    {
+        $sql = 'INSERT INTO `films` '
+            . '(title, release_year, format, stars_list)'
+            . 'VALUES '
+            . '(:title, :release_year, :format, :stars_list)';
+
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':title', $options['title'], PDO::PARAM_STR);
+        $result->bindParam(':release_year', $options['release_year'], PDO::PARAM_INT);
+        $result->bindParam(':format', $options['format'], PDO::PARAM_STR);
+        $result->bindParam(':stars_list', $options['stars_list'], PDO::PARAM_STR);
+
+        return $result->execute();
     }
 }
