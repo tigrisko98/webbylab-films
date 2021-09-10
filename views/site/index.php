@@ -23,10 +23,13 @@
                             <td><?php echo $film['release_year']; ?></td>
                             <td><?php echo $film['format']; ?></td>
                             <td><?php echo $film['stars_list']; ?></td>
-                            <!-- <td><a href="/film/update/<?php echo $film['id']; ?>"
-                                   class="btn btn-primary">Редактировать</a>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Удалить</button>
-                            </td> -->
+                            <td><a href="/film/update/<?php echo $film['id']; ?>"
+                                   class="btn btn-primary">Update</a>
+                            </td>
+                            <td>
+                                <a href="/film/delete/<?php echo $film['id']; ?>" type="button" class="btn btn-danger">Delete
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

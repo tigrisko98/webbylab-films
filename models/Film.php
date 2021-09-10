@@ -53,4 +53,45 @@ class Film
 
         return $result->execute();
     }
+
+    public function getFilmById($id)
+    {
+        if ($id = intval($id)) {
+            $result = $this->db->query('SELECT * FROM `films` WHERE id=' . $id);
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+
+            return $result->fetch();
+        }
+    }
+
+    public function updateFilmById($id, $options)
+    {
+
+        $sql = 'UPDATE `films` SET 
+                        title = :title, 
+                        release_year = :release_year, 
+                        format = :format, 
+                        stars_list = :stars_list 
+                        WHERE id = :id';
+
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':title', $options['title'], PDO::PARAM_STR);
+        $result->bindParam(':release_year', $options['release_year'], PDO::PARAM_INT);
+        $result->bindParam(':format', $options['format'], PDO::PARAM_STR);
+        $result->bindParam(':stars_list', $options['stars_list'], PDO::PARAM_STR);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $result->execute();
+
+    }
+
+    public function deleteFilmById($id)
+    {
+        $sql = 'DELETE FROM `films` WHERE id = :id';
+
+        $result = $this->db->prepare($sql);
+        $result->bindParam(':id', $id, PDO::PARAM_INT);
+
+        return $result->execute();
+    }
 }

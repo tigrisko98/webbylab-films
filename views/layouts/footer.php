@@ -1,6 +1,6 @@
 </main>
 
-<footer class="text-muted py-5 flex-column fixed-bottom">
+<!--<footer class="text-muted py-5 flex-column fixed-bottom">
     <div class="">
         <div class="container">
             <p class="float-end mb-1">
@@ -8,7 +8,7 @@
             </p>
         </div>
     </div>
-</footer>
+</footer>-->
 
 <script src="/template/js/jquery-3.6.0.min.js"></script>
 <script src="/template/js/bootstrap.min.js"></script>
