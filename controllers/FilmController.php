@@ -38,7 +38,16 @@ class FilmController
             $result = $film->deleteFilmById($id);
             header("Location: /");
         }
-        require_once (ROOT . '/views/film/delete.php');
+        require_once(ROOT . '/views/film/delete.php');
+        return true;
+    }
+
+    public function actionView($id)
+    {
+        $film = new Film();
+        $filmData = $film->getFilmById($id);
+
+        require_once(ROOT . '/views/film/view.php');
         return true;
     }
 }
