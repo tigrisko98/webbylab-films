@@ -7,11 +7,15 @@ class SiteController
     public function actionIndex()
     {
         $films = new Film();
-        $filmsList = $films->getFilmsList();
+       $filmsList = $films->getFilmsList();
         if (isset($_POST['submit'])) {
             $parsedFile = Parser::parseFile($_FILES['text']['tmp_name']);
             $executeQuery = $films->batchInsert($parsedFile);
             header("Location:/");
+        }
+
+        if (isset($_POST['submit_filters'])) {
+            $filmsList = $films->filterByTitleAndStars($_POST);
         }
         require_once('views/site/index.php');
         return true;

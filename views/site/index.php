@@ -6,6 +6,24 @@
             <a href="#" data-bs-toggle="modal" data-bs-target="#uploadFilmsModal">
                 Import films
             </a>
+            <form class="row g-lg-3" action="#" method="post">
+                <div class="col-auto">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" name="title" class="form-control" id="title"
+                           placeholder="Input film title" value="<?php if (isset($_POST['title'])) {
+                        echo $_POST['title'];
+                    } ?>">
+                </div>
+                <div class="col-auto">
+                    <label for="stars_list" class="form-label">Stars</label>
+                    <input type="text" name="stars_list" class="form-control" id="stars_list"
+                           placeholder="Input film stars">
+                </div>
+                <div class="col-auto">
+                    <label for="submit_filters" class="form-label" style="visibility: hidden">Submit</label>
+                    <button type="submit" name="submit_filters" class="form-control btn btn-primary">Search</button>
+                </div>
+            </form>
             <?php if (!empty($filmsList)): ?>
                 <table class="table">
                     <tr>
@@ -19,7 +37,7 @@
                     <?php foreach ($filmsList as $film): ?>
                         <tr>
                             <td><?php echo $film['id']; ?></td>
-                            <td><a href="/film/<?php echo $film['id'];?>"><?php echo $film['title']; ?></a></td>
+                            <td><a href="/film/<?php echo $film['id']; ?>"><?php echo $film['title']; ?></a></td>
                             <td><?php echo $film['release_year']; ?></td>
                             <td><?php echo $film['format']; ?></td>
                             <td><?php echo $film['stars_list']; ?></td>
@@ -35,7 +53,7 @@
                 </table>
             <?php else: ?>
                 <p>
-                    Films have not been added yet.
+                    No data to display.
                 </p>
             <?php endif; ?>
 
