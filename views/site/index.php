@@ -17,7 +17,9 @@
                 <div class="col-auto">
                     <label for="stars_list" class="form-label">Stars</label>
                     <input type="text" name="stars_list" class="form-control" id="stars_list"
-                           placeholder="Input film stars">
+                           placeholder="Input film stars" value="<?php if (isset($_POST['stars_list'])) {
+                        echo $_POST['stars_list'];
+                    } ?>">
                 </div>
                 <div class="col-auto">
                     <label for="submit_filters" class="form-label" style="visibility: hidden">Submit</label>

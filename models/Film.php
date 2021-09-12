@@ -4,6 +4,8 @@ require_once('components/Db.php');
 class Film
 {
     private $db;
+    protected $table = 'films';
+    protected $fillable = ['title', 'release_year', 'format', 'stars_list'];
 
     public function __construct()
     {
@@ -12,7 +14,7 @@ class Film
 
     public function getFilmsList()
     {
-        $result = $this->db->query('SELECT * FROM `films`');
+        $result = $this->db->query("SELECT * FROM $this->table");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         return $result->fetchAll();
@@ -20,14 +22,14 @@ class Film
 
     public function batchInsert(array $parsedData)
     {
-        $stmt = $this->db->prepare('INSERT INTO `films` '
+        $result = $this->db->prepare("INSERT INTO $this->table "
             . '(title, release_year, format, stars_list)'
             . 'VALUES '
             . '(?, ?, ?, ?)');
         try {
             $this->db->beginTransaction();
             foreach ($parsedData as $row) {
-                $stmt->execute($row);
+                $result->execute($row);
 
             }
             $this->db->commit();
@@ -40,7 +42,7 @@ class Film
 
     public function createFilm($options)
     {
-        $sql = 'INSERT INTO `films` '
+        $sql = "INSERT INTO $this->table "
             . '(title, release_year, format, stars_list)'
             . 'VALUES '
             . '(:title, :release_year, :format, :stars_list)';
@@ -57,7 +59,7 @@ class Film
     public function getFilmById($id)
     {
         if ($id = intval($id)) {
-            $result = $this->db->query('SELECT * FROM `films` WHERE id=' . $id);
+            $result = $this->db->query("SELECT * FROM $this->table WHERE id=" . $id);
             $result->setFetchMode(PDO::FETCH_ASSOC);
 
             return $result->fetch();
@@ -67,12 +69,12 @@ class Film
     public function updateFilmById($id, $options)
     {
 
-        $sql = 'UPDATE `films` SET 
+        $sql = "UPDATE $this->table SET 
                         title = :title, 
                         release_year = :release_year, 
                         format = :format, 
                         stars_list = :stars_list 
-                        WHERE id = :id';
+                        WHERE id = :id";
 
         $result = $this->db->prepare($sql);
         $result->bindParam(':title', $options['title'], PDO::PARAM_STR);
@@ -87,11 +89,35 @@ class Film
 
     public function deleteFilmById($id)
     {
-        $sql = 'DELETE FROM `films` WHERE id = :id';
+        $sql = "DELETE FROM $this->table WHERE id = :id";
 
         $result = $this->db->prepare($sql);
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 
         return $result->execute();
+    }
+
+    public function filterByFields(array $filtersOptions = null)
+    {
+        $sql = "SELECT * FROM $this->table";
+        $values = [];
+
+        if (!empty(array_filter($filtersOptions))) {
+            $sql = $sql . " WHERE ";
+            foreach ($filtersOptions as $key => $value) {
+                if (!empty($value) && in_array($key, $this->fillable)) {
+                    $sql .= "$key LIKE ?";
+                    $sql .= ' AND ';
+                    $values[] = "%" . trim($value) . "%";
+                }
+            }
+            $sql = substr($sql, 0, -4);
+        }
+
+        $result = $this->db->prepare($sql);
+        $result->execute(array_values($values));
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $result->fetchAll();
     }
 }

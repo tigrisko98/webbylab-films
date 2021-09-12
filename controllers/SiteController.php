@@ -15,7 +15,7 @@ class SiteController
         }
 
         if (isset($_POST['submit_filters'])) {
-            $filmsList = $films->filterByTitleAndStars($_POST);
+            $filmsList = $films->filterByFields($_POST);
         }
         require_once('views/site/index.php');
         return true;
