@@ -1,6 +1,4 @@
 <?php
-require_once('components/Parser.php');
-require_once('models/Film.php');
 
 class SiteController
 {
