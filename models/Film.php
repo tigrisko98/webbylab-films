@@ -4,7 +4,7 @@ class Film
 {
     private $db;
     protected $table = 'films';
-    protected $fillable = ['title', 'release_year', 'format', 'stars_list'];
+    protected $fillable = ['id', 'title', 'release_year', 'format', 'stars_list'];
 
     public function __construct()
     {
@@ -96,21 +96,29 @@ class Film
         return $result->execute();
     }
 
-    public function filterByFields(array $filtersOptions = null)
+    public function filterAndSortByFields(array $filtersAndSortOptions = null)
     {
         $sql = "SELECT * FROM $this->table";
         $values = [];
 
-        if (!empty(array_filter($filtersOptions))) {
+        if (!empty($filtersAndSortOptions['title']) || !empty($filtersAndSortOptions['stars_list'])) {
             $sql = $sql . " WHERE ";
-            foreach ($filtersOptions as $key => $value) {
+            foreach ($filtersAndSortOptions as $key => $value) {
                 if (!empty($value) && in_array($key, $this->fillable)) {
                     $sql .= "$key LIKE ?";
                     $sql .= ' AND ';
                     $values[] = "%" . trim($value) . "%";
                 }
             }
-            $sql = substr($sql, 0, -4);
+            $sql = substr($sql, 0, -5);
+        }
+
+        if (!empty($filtersAndSortOptions['sort_field'])) {
+            $sql .= " ORDER BY $filtersAndSortOptions[sort_field]";
+        }
+
+        if (!empty($filtersAndSortOptions['direction'])){
+            $sql .= " $filtersAndSortOptions[direction]";
         }
 
         $result = $this->db->prepare($sql);
@@ -119,4 +127,5 @@ class Film
 
         return $result->fetchAll();
     }
+
 }

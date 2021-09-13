@@ -22,8 +22,44 @@
                     } ?>">
                 </div>
                 <div class="col-auto">
-                    <label for="submit_filters" class="form-label" style="visibility: hidden">Submit</label>
-                    <button type="submit" name="submit_filters" class="form-control btn btn-primary">Search</button>
+                    <label for="sort_field" class="form-label">Sort by</label>
+                    <select class="form-control" name="sort_field" id="sort_field">
+                        <option selected disabled>--Select field to sort--</option>
+                        <option value="id"
+                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "id") echo 'selected="selected"'; ?>>
+                            ID
+                        </option>
+                        <option value="title"
+                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "title") echo 'selected="selected"'; ?>>
+                            Title
+                        </option>
+                        <option value="release_year"
+                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "release_year") echo 'selected="selected"'; ?>>
+                            Release year
+                        </option>
+                        <option value="stars_list"
+                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "stars_list") echo 'selected="selected"'; ?>>
+                            Stars
+                        </option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="direction" class="form-label">Direction</label>
+                    <select class="form-control" name="direction">
+                        <option selected disabled>--Select sort direction--</option>
+                        <option value="ASC"
+                            <?php if (isset($_POST['direction']) && $_POST['direction'] == "ASC") echo 'selected="selected"'; ?>>
+                            A-Z
+                        </option>
+                        <option value="DESC"
+                            <?php if (isset($_POST['direction']) && $_POST['direction'] == "DESC") echo 'selected="selected"'; ?>>
+                            Z-A
+                        </option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="submit_filters_and_sort" class="form-label" style="visibility: hidden">Submit</label>
+                    <button type="submit" name="submit_filters_and_sort" class="form-control btn btn-primary">Search</button>
                 </div>
             </form>
             <?php if (!empty($filmsList)): ?>
@@ -34,6 +70,7 @@
                         <th scope="col">Release year</th>
                         <th scope="col">Format</th>
                         <th scope="col">Stars</th>
+                        <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
                     <?php foreach ($filmsList as $film): ?>
