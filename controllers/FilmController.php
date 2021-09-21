@@ -18,6 +18,31 @@ class FilmController
         return true;
     }
 
+    public function actionImport()
+    {
+        $films = new Film();
+
+        if (isset($_POST['submit'])) {
+            $importFile = $_FILES['file']['tmp_name'];
+            $errors = Validator::validateImportFile($importFile);
+
+            if (empty($errors)) {
+                $parsedFile = Parser::parseFile($importFile);
+                $executeQuery = $films->batchInsert($parsedFile);
+
+                if ($executeQuery !== true) {
+                    $errors[] = 'Invalid file';
+                } else {
+                    header("Location:/");
+                }
+
+            }
+        }
+
+        require_once(ROOT . '/views/film/import.php');
+        return true;
+    }
+
     public function actionUpdate($id)
     {
         $film = new Film();

@@ -20,6 +20,11 @@
                         Create film
                     </a>
                 </li>
+                <li>
+                    <a href="/film/import" class="nav-link text-white">
+                        Import films
+                    </a>
+                </li>
             </ul>
         </div>
     </div>

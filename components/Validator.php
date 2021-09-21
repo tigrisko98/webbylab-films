@@ -1,5 +1,5 @@
 <?php
-
+//require_once ('models/Film.php');
 class Validator
 {
     public static $errors = [];
@@ -33,6 +33,15 @@ class Validator
                 self::$errors[] = str_replace('_', ' ', ucfirst($key)) . ' is required.';
             }
         }
+        return self::$errors;
+    }
+
+    public static function validateImportFile($importFile)
+    {
+        if (!in_array(pathinfo($importFile, PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv']) && !empty($_POST['file'])) {
+            self::$errors[] = 'Invalid file extension.';
+        }
+
         return self::$errors;
     }
 }

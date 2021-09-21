@@ -3,9 +3,6 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <a href="#" data-bs-toggle="modal" data-bs-target="#uploadFilmsModal">
-                Import films
-            </a>
             <form class="row g-lg-3" action="#" method="post">
                 <div class="col-auto">
                     <label for="title" class="form-label">Title</label>
@@ -95,33 +92,6 @@
                     No data to display.
                 </p>
             <?php endif; ?>
-
-            <div class="modal fade" id="uploadFilmsModal" tabindex="-1" aria-labelledby="uploadFilmsModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="uploadFilmsModalLabel">Import films</h5><br>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            <br>
-                        </div>
-                        <div class="modal-body">
-                            <h6 id="uploadFilmsModalLabel">You can import films from .txt file.</h6>
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label for="text" class="form-label">Upload file</label>
-                                    <input type="file" name="text" class="form-control" id="text" placeholder=""
-                                           value="">
-                                </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" name="submit" class="btn btn-primary">Upload</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

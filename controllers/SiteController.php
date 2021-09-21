@@ -7,12 +7,6 @@ class SiteController
         $films = new Film();
         $filmsList = $films->getFilmsList();
 
-        if (isset($_POST['submit'])) {
-            $parsedFile = Parser::parseFile($_FILES['text']['tmp_name']);
-            $executeQuery = $films->batchInsert($parsedFile);
-            header("Location:/");
-        }
-
         if (isset($_POST['submit_filters_and_sort'])) {
             $filmsList = $films->filterAndSortByFields($_POST);
         }

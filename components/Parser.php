@@ -2,9 +2,9 @@
 
 class Parser
 {
-    public static function parseFile($uploadedTextFile)
+    public static function parseFile($importFile)
     {
-        $textFileContent = file_get_contents($uploadedTextFile);
+        $textFileContent = file_get_contents($importFile);
         $pos = strpos($textFileContent, "Title");
         $textFileContent = substr($textFileContent, $pos);
 

@@ -25,16 +25,19 @@ class Film
             . '(title, release_year, format, stars_list)'
             . 'VALUES '
             . '(?, ?, ?, ?)');
-        try {
-            $this->db->beginTransaction();
-            foreach ($parsedData as $row) {
-                $result->execute($row);
 
-            }
+
+        $this->db->beginTransaction();
+
+        foreach ($parsedData as $row) {
+            $executions[] = $result->execute($row);
+        }
+
+        if (in_array(true, $executions)) {
             $this->db->commit();
-        } catch (Exception $e) {
+        } else {
             $this->db->rollback();
-            throw $e;
+            return 'Invalid file.';
         }
         return true;
     }
@@ -117,7 +120,7 @@ class Film
             $sql .= " ORDER BY $filtersAndSortOptions[sort_field]";
         }
 
-        if (!empty($filtersAndSortOptions['direction'])){
+        if (!empty($filtersAndSortOptions['direction'])) {
             $sql .= " $filtersAndSortOptions[direction]";
         }
 
