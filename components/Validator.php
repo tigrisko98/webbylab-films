@@ -1,4 +1,5 @@
 <?php
+
 //require_once ('models/Film.php');
 class Validator
 {
@@ -40,6 +41,10 @@ class Validator
     {
         if (!in_array(pathinfo($importFile, PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv']) && !empty($_POST['file'])) {
             self::$errors[] = 'Invalid file extension.';
+        }
+
+        if (Parser::parseFile($importFile) === false) {
+             self::$errors[] = 'No data to import.';
         }
 
         return self::$errors;

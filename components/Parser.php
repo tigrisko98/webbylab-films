@@ -11,7 +11,7 @@ class Parser
         $preparedText = preg_split('/ *(Title|Release Year|Format|Stars): /', $textFileContent);
 
         if (!isset($preparedText[1])) {
-            return 'No Data to insert';
+            return false;
         }
 
         if (!strlen(trim($preparedText[0]))) {
