@@ -23,15 +23,15 @@ class FilmController
         $films = new Film();
 
         if (isset($_POST['submit'])) {
-            $importFile = $_FILES['file']['tmp_name'];
+            $importFile = $_FILES;
             $errors = Validator::validateImportFile($importFile);
 
             if (empty($errors)) {
-                $parsedFile = Parser::parseFile($importFile);
+                $parsedFile = Parser::parseFile($importFile['file']['tmp_name']);
                 $executeQuery = $films->batchInsert($parsedFile);
 
                 if ($executeQuery !== true) {
-                    $errors[] = 'Invalid file';
+                    $errors[] = 'Invalid file.';
                 } else {
                     header("Location:/");
                 }

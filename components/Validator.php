@@ -39,11 +39,11 @@ class Validator
 
     public static function validateImportFile($importFile)
     {
-        if (!in_array(pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv'])) {
+        if (!in_array(pathinfo($importFile['file']['name'], PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv'])) {
             self::$errors[] = 'Invalid file extension.';
         }
 
-        if (Parser::parseFile($importFile) === false) {
+        if (Parser::parseFile($importFile['file']['tmp_name']) === false) {
             self::$errors[] = 'No data to import.';
         }
 
