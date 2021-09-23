@@ -2,7 +2,7 @@
 
 class SiteController
 {
-    public function actionIndex()
+    public function actionIndex(): bool
     {
         $films = new Film();
         $filmsList = $films->getFilmsList();

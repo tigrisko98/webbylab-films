@@ -2,13 +2,11 @@
 
 class Router
 {
-
     private $routes;
 
     public function __construct()
     {
         $routesPath = ROOT . '/config/routes.php';
-
         $this->routes = include($routesPath);
     }
 
@@ -47,7 +45,7 @@ class Router
 
                 $controllerObject = new $controllerName;
 
-                $result = call_user_func_array(array($controllerObject, $actionName), $parameters);
+                $result = call_user_func_array([$controllerObject, $actionName], $parameters);
 
                 if ($result != null) {
                     break;

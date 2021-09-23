@@ -2,7 +2,7 @@
 
 class FilmController
 {
-    public function actionCreate()
+    public function actionCreate(): bool
     {
         $film = new Film();
         $filmsList = $film->getFilmsList();
@@ -18,7 +18,7 @@ class FilmController
         return true;
     }
 
-    public function actionImport()
+    public function actionImport(): bool
     {
         $films = new Film();
 
@@ -27,7 +27,12 @@ class FilmController
             $errors = Validator::validateImportFile($importFile);
 
             if (empty($errors)) {
-                $parsedFile = Parser::parseFile($importFile['file']['tmp_name']);
+                if (Parser::getFileExtension($importFile) == 'csv') {
+                    $parsedFile = Parser::parseCsvFile($importFile['file']['tmp_name']);
+                    unset($parsedFile[0]);
+                } else {
+                    $parsedFile = Parser::parseTxtOrDocFile($importFile['file']['tmp_name']);
+                }
                 $executeQuery = $films->batchInsert($parsedFile);
 
                 if ($executeQuery !== true) {
@@ -35,7 +40,6 @@ class FilmController
                 } else {
                     header("Location:/");
                 }
-
             }
         }
 
@@ -43,7 +47,7 @@ class FilmController
         return true;
     }
 
-    public function actionUpdate($id)
+    public function actionUpdate($id): bool
     {
         $film = new Film();
         $filmsList = $film->getFilmsList();
@@ -61,7 +65,7 @@ class FilmController
         return true;
     }
 
-    public function actionDelete($id)
+    public function actionDelete($id): bool
     {
         $film = new Film();
         $filmData = $film->getFilmById($id);
@@ -74,7 +78,7 @@ class FilmController
         return true;
     }
 
-    public function actionView($id)
+    public function actionView($id): bool
     {
         $film = new Film();
         $filmData = $film->getFilmById($id);

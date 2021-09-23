@@ -5,7 +5,7 @@ class Validator
 {
     public static $errors = [];
 
-    public static function validateFilm($options, $filmsList = [])
+    public static function validateFilm(array $options, array $filmsList = []): array
     {
         foreach ($filmsList as $film) {
             if (in_array($options['title'], $film)) {
@@ -37,13 +37,13 @@ class Validator
         return self::$errors;
     }
 
-    public static function validateImportFile($importFile)
+    public static function validateImportFile(array $importFile): array
     {
         if (!in_array(pathinfo($importFile['file']['name'], PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv'])) {
             self::$errors[] = 'Invalid file extension.';
         }
 
-        if (Parser::parseFile($importFile['file']['tmp_name']) === false) {
+        if (Parser::parseTxtOrDocFile($importFile['file']['tmp_name']) === false && Parser::parseCsvFile($importFile['file']['tmp_name']) === false) {
             self::$errors[] = 'No data to import.';
         }
 

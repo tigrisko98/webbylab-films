@@ -11,7 +11,7 @@ class Film
         $this->db = Db::getConnection();
     }
 
-    public function getFilmsList()
+    public function getFilmsList(): array
     {
         $result = $this->db->query("SELECT * FROM $this->table");
         $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -42,12 +42,13 @@ class Film
         return true;
     }
 
-    public function createFilm($options)
+    public function createFilm($options): bool
     {
         $sql = "INSERT INTO $this->table "
             . '(title, release_year, format, stars_list)'
             . 'VALUES '
             . '(:title, :release_year, :format, :stars_list)';
+
 
         $result = $this->db->prepare($sql);
         $result->bindParam(':title', $options['title'], PDO::PARAM_STR);
@@ -68,7 +69,7 @@ class Film
         }
     }
 
-    public function updateFilmById($id, $options)
+    public function updateFilmById($id, $options): bool
     {
 
         $sql = "UPDATE $this->table SET 
@@ -89,7 +90,7 @@ class Film
 
     }
 
-    public function deleteFilmById($id)
+    public function deleteFilmById($id): bool
     {
         $sql = "DELETE FROM $this->table WHERE id = :id";
 
@@ -99,7 +100,7 @@ class Film
         return $result->execute();
     }
 
-    public function filterAndSortByFields(array $filtersAndSortOptions = null)
+    public function filterAndSortByFields(array $filtersAndSortOptions = null): array
     {
         $sql = "SELECT * FROM $this->table";
         $values = [];
@@ -130,5 +131,4 @@ class Film
 
         return $result->fetchAll();
     }
-
 }
