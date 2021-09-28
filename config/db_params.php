@@ -3,6 +3,6 @@
 return [
     'host' => 'localhost',
     'dbname' => 'webbylab_films_db',
-    'user' => 'user',
-    'password' => 'password',
+    'user' => 'root',
+    'password' => '',
 ];
