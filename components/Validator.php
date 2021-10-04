@@ -1,6 +1,5 @@
 <?php
 
-//require_once ('models/Film.php');
 class Validator
 {
     public static $errors = [];
@@ -8,7 +7,7 @@ class Validator
     public static function validateFilm(array $options, array $filmsList = []): array
     {
         foreach ($filmsList as $film) {
-            if (in_array($options['title'], $film)) {
+            if ($options['title'] == trim($film['title'])) {
                 self::$errors[] = 'This film is already been added.';
             }
         }
