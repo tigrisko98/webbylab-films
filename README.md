@@ -16,6 +16,6 @@
 
 - Run PHP server on available port:
 
-    `php -S localhost:8080
+    `php -S localhost:8080`
 
 - Open `http://localhost:8080/` on browser.
