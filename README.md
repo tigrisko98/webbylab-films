@@ -18,6 +18,8 @@
 
     `sudo mysql -uroot < webbylab_films_db_dump.sql`
 
+- Change `user` and `password` options in `config/db_params.php` file (optional). 
+
 - Run PHP server on available port:
 
     `php -S localhost:8080`
