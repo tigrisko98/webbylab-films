@@ -29,9 +29,20 @@ class Validator
         }
 
         foreach ($options as $key => $value) {
-            if (empty($options[$key])) {
+            if (empty($options[$key]) || preg_match('/^\s+$/', $options[$key])) {
                 self::$errors[] = str_replace('_', ' ', ucfirst($key)) . ' is required.';
             }
+        }
+
+        if (!preg_match('/^[a-zA-Z]+([ -]?[a-zA-Z])+(([,]|[, ])*[a-zA-Z]+([ -]?[a-zA-Z]))*( )*$/',
+                $options['stars_list']) && !preg_match('/^\s+$/', $options['stars_list'])) {
+            self::$errors[] = 'Invalid name of the star (stars).';
+        }
+
+        $starsList = explode(', ', $options['stars_list']);
+        $duplicates = array_unique(array_diff_assoc($starsList, array_unique($starsList)));
+        if(!empty($duplicates)){
+            self::$errors[] = 'Duplicate found in Stars list field.';
         }
         return self::$errors;
     }

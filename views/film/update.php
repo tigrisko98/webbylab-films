@@ -27,7 +27,7 @@
                                else echo $filmData['format']; ?>">
                     </div>
                     <div class="mb-3">
-                        <label for="stars_list" class="form-label">Изображение книги</label>
+                        <label for="stars_list" class="form-label">Stars list</label>
                         <input type="text" name="stars_list" class="form-control" id="stars_list"
                                placeholder="Input film stars"
                                value="<?php if (isset($_POST['stars_list'])) echo $_POST['stars_list'];
