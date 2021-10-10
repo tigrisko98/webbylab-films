@@ -19,9 +19,19 @@
                     </div>
                     <div class="mb-3">
                         <label for="format" class="form-label">Format</label>
-                        <input type="text" name="format" class="form-control" id="format"
-                               placeholder="Input film format"
-                               value="<?php if (isset($_POST['format'])) echo $_POST['format']; ?>">
+                        <select name="format" class="form-select">
+                            <option selected disabled>Select film format</option>
+                            <?php foreach ($formatsList as $format): ?>
+                                <option value="<?php echo $format ?>"
+                                    <?php
+                                    if (isset($_POST['format']) && $format == $_POST['format']) {
+                                        echo 'selected="selected"';
+                                    }
+                                    ?>>
+                                    <?php echo $format; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+
                     </div>
                     <div class="mb-3">
                         <label for="stars_list" class="form-label">Stars list</label>

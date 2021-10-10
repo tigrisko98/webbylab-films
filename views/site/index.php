@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-auto">
                     <label for="sort_field" class="form-label">Sort by</label>
-                    <select class="form-control" name="sort_field" id="sort_field">
+                    <select class="form-select" name="sort_field" id="sort_field">
                         <option selected disabled>--Select field to sort--</option>
                         <option value="id"
                             <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "id") echo 'selected="selected"'; ?>>
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-auto">
                     <label for="direction" class="form-label">Direction</label>
-                    <select class="form-control" name="direction">
+                    <select class="form-select" name="direction">
                         <option selected disabled>--Select sort direction--</option>
                         <option value="ASC"
                             <?php if (isset($_POST['direction']) && $_POST['direction'] == "ASC") echo 'selected="selected"'; ?>>

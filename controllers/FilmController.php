@@ -8,6 +8,12 @@ class FilmController
     {
         $film = new Film();
         $filmsList = $film->getFilmsList();
+        $formatsList = $this->actionFormats();
+
+        if (!isset($_POST['format'])) {
+            $_POST['format'] = '';
+        }
+
         if (isset($_POST['submit'])) {
             $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
@@ -54,6 +60,11 @@ class FilmController
         $film = new Film();
         $filmsList = $film->getFilmsList();
         $filmData = $film->getFilmById($id);
+        $formatsList = $this->actionFormats();
+
+        if (!isset($_POST['format'])) {
+            $_POST['format'] = $filmData['format'];
+        }
 
         if (isset($_POST['submit'])) {
             $errors = Validator::validateFilm($_POST);
@@ -91,7 +102,6 @@ class FilmController
 
     public function actionFormats(): array
     {
-        $formatsList = $this->formats;
-        return $formatsList;
+        return $this->formats;
     }
 }

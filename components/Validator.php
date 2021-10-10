@@ -35,7 +35,7 @@ class Validator
         }
 
         if (!preg_match('/^[a-zA-Z]+([ -]?[a-zA-Z])+(([,]|[, ])*[a-zA-Z]+([ -]?[a-zA-Z]))*( )*$/',
-                $options['stars_list']) && !preg_match('/^\s+$/', $options['stars_list'])) {
+                $options['stars_list']) && !empty($options['stars_list']) && !preg_match('/^\s+$/', $options['stars_list'])) {
             self::$errors[] = 'Invalid name of the star (stars).';
         }
 
