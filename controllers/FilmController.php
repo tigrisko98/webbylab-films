@@ -2,6 +2,8 @@
 
 class FilmController
 {
+    private $formats = ['DVD', 'VHS', 'Blu-Ray'];
+
     public function actionCreate(): bool
     {
         $film = new Film();
@@ -85,5 +87,11 @@ class FilmController
 
         require_once(ROOT . '/views/film/view.php');
         return true;
+    }
+
+    public function actionFormats(): array
+    {
+        $formatsList = $this->formats;
+        return $formatsList;
     }
 }
