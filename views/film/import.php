@@ -1,4 +1,9 @@
 <?php require_once(ROOT . '/views/layouts/header.php'); ?>
+<?php if(isset($_POST['submit']) && empty($errors)):?>
+    <div class="alert alert-success" role="alert">
+        Films has been successfully imported.
+    </div>
+<?php endif;?>
 
     <script type="text/javascript">
         function removeDisabledAttr(){

@@ -1,5 +1,9 @@
 <?php require_once(ROOT . '/views/layouts/header.php'); ?>
-
+<?php if(isset($_POST['submit']) && empty($errors)):?>
+    <div class="alert alert-success" role="alert">
+        The film has been successfully updated.
+    </div>
+<?php endif;?>
     <div class="container">
         <div class="row">
             <div class="col-12">

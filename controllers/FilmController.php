@@ -18,7 +18,9 @@ class FilmController
             $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
                 $film->createFilm($_POST);
-                header("Location: /");
+
+                echo '<script>setTimeout(function () {
+                    window.location.href = "/";  }, 2000);</script>';
             }
         }
 
@@ -46,7 +48,8 @@ class FilmController
                 if ($executeQuery !== true) {
                     $errors[] = 'Invalid file.';
                 } else {
-                    header("Location:/");
+                    echo '<script>setTimeout(function () {
+                    window.location.href = "/";  }, 2000);</script>';
                 }
             }
         }
@@ -70,7 +73,8 @@ class FilmController
             $errors = Validator::validateFilm($_POST);
             if (empty($errors)) {
                 $film->updateFilmById($id, $_POST);
-                header("Location: /");
+                echo '<script>setTimeout(function () {
+                    window.location.href = "/";  }, 2000);</script>';
             }
         }
 

@@ -1,4 +1,9 @@
 <?php require_once(ROOT . '/views/layouts/header.php'); ?>
+<?php if(isset($_POST['submit']) && empty($errors)):?>
+    <div class="alert alert-success" role="alert">
+       The film has been successfully created.
+    </div>
+<?php endif;?>
 
     <div class="container">
         <div class="row">
@@ -41,6 +46,7 @@
                     </div>
                     <input type="submit" name="submit" class="btn btn-primary mb-3" value="Create film">
                 </form>
+
                 <?php
                 if (isset($errors)) {
                     foreach ($errors as $error) {
