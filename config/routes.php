@@ -8,5 +8,6 @@ return [
     'film/import' => 'film/import',
     'film/formats' => 'film/formats',
     'filters/reset' => 'site/filtersReset',
+    'page-([0-9]+)' => 'site/index/$1',
     '' => 'site/index'
 ];

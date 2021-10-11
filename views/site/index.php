@@ -101,9 +101,13 @@
                     No data to display.
                 </p>
             <?php endif; ?>
+            <?php echo $pagination->get(); ?>
         </div>
     </div>
 </div>
+
+
+
 
 <script>$("#searchclear").click(function(){
         $("#searchinput").val('');

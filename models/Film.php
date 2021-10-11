@@ -2,6 +2,7 @@
 
 class Film
 {
+    const SHOW_BY_DEFAULT = 10;
     private $db;
     protected $table = 'films';
     protected $fillable = ['id', 'title', 'release_year', 'format', 'stars_list'];
@@ -11,9 +12,11 @@ class Film
         $this->db = Db::getConnection();
     }
 
-    public function getFilmsList(): array
+    public function getFilmsList($page = 1): array
     {
-        $result = $this->db->query("SELECT * FROM $this->table");
+        $limit = self::SHOW_BY_DEFAULT;
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
+        $result = $this->db->query("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         return $result->fetchAll();
@@ -100,9 +103,11 @@ class Film
         return $result->execute();
     }
 
-    public function filterAndSortByFields(array $filtersAndSortOptions = null): array
+    public function filterAndSortByFields(array $filtersAndSortOptions = null, $page = 1): array
     {
         $sql = "SELECT * FROM $this->table";
+        $limit = self::SHOW_BY_DEFAULT;
+        $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
         $values = [];
 
         if (!empty($filtersAndSortOptions['title']) || !empty($filtersAndSortOptions['stars_list'])) {
@@ -124,11 +129,21 @@ class Film
         if (!empty($filtersAndSortOptions['direction'])) {
             $sql .= " $filtersAndSortOptions[direction]";
         }
+        $sql .= " LIMIT $limit OFFSET $offset";
 
         $result = $this->db->prepare($sql);
         $result->execute(array_values($values));
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         return $result->fetchAll();
+    }
+
+    public function getTotalFilms(): int
+    {
+        $sql = 'SELECT COUNT(id) AS count FROM `films`';
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        $row = $result->fetch();
+        return $row['count'];
     }
 }
