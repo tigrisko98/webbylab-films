@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `webbylab_films_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `webbylab_films_db`;
+CREATE DATABASE  IF NOT EXISTS webbylab_films_db CHARACTER SET utf8 COLLATE utf8_unicode_ci/*!40100 DEFAULT CHARACTER SET utf8 */;
+USE webbylab_films_db;
 -- MySQL dump 10.13  Distrib 8.0.26, for Linux (x86_64)
 --
 -- Host: localhost    Database: webbylab_films_db
 -- ------------------------------------------------------
--- Server version	8.0.26-0ubuntu0.20.04.2
+-- Server version  8.0.26-0ubuntu0.20.04.2
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,32 +18,48 @@ USE `webbylab_films_db`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `films`
+-- Table structure for table films
 --
 
-DROP TABLE IF EXISTS `films`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `films` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `release_year` year NOT NULL,
-  `format` varchar(10) NOT NULL,
-  `stars_list` text NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE IF NOT EXISTS films
+(
+    id
+    int
+    NOT
+    NULL
+    AUTO_INCREMENT,
+    title
+    varchar
+(
+    255
+) NOT NULL,
+    release_year year NOT NULL,
+    format varchar
+(
+    10
+) NOT NULL,
+    stars_list text NOT NULL,
+    PRIMARY KEY
+(
+    id
+),
+    UNIQUE KEY title
+(
+    title
+)
+    ) ENGINE=InnoDB;
 
 --
--- Dumping data for table `films`
+-- Dumping data for table films
 --
 
-LOCK TABLES `films` WRITE;
-/*!40000 ALTER TABLE `films` DISABLE KEYS */;
-/*!40000 ALTER TABLE `films` ENABLE KEYS */;
+LOCK TABLES films WRITE;
+/*!40000 ALTER TABLE films DISABLE KEYS */;
+/*!40000 ALTER TABLE films ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+ALTER TABLE films CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
