@@ -13,7 +13,9 @@ class SiteController
                 $_SESSION[$key] = $value;
             }
             $filmsList = $films->filterAndSortByFields($_SESSION, $page);
-            $total = $filmsList[0]['count'];
+            if(!empty($filmsList)){
+                $total = $filmsList[0]['count'];
+            }
         }
 
         $pagination = new Pagination($total, $page, $films::SHOW_BY_DEFAULT, 'page-');
