@@ -6,21 +6,23 @@
             <form class="row row g-3" action="" method="post">
                 <div class="col-auto">
                     <label for="title" class="form-label">Title</label>
-                    <input type="text" name="title" class="form-control" id="title"
+                    <input type="search" name="title" class="form-control searchinput" id="title"
                            placeholder="Input film title" value="<?php if (isset($_POST['title'])) {
                         echo $_POST['title'];
                     } ?>">
+                    <span class="glyphicon glyphicon-remove-circle searchclear"></span>
                 </div>
                 <div class="col-auto">
                     <label for="stars_list" class="form-label">Stars</label>
-                    <input type="text" name="stars_list" class="form-control" id="stars_list"
+                    <input type="search" name="stars_list" class="form-control searchinput" id="stars_list"
                            placeholder="Input film stars" value="<?php if (isset($_POST['stars_list'])) {
                         echo $_POST['stars_list'];
                     } ?>">
+                    <span class="glyphicon glyphicon-remove-circle searchclear"></span>
                 </div>
                 <div class="col-auto">
                     <label for="sort_field" class="form-label">Sort by</label>
-                    <select class="form-select" name="sort_field" id="sort_field">
+                    <select class="form-select searchinput" name="sort_field" id="sort_field">
                         <option selected disabled>--Select field to sort--</option>
                         <option value="id"
                             <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "id") echo 'selected="selected"'; ?>>
@@ -102,5 +104,9 @@
         </div>
     </div>
 </div>
+
+<script>$("#searchclear").click(function(){
+        $("#searchinput").val('');
+    });</script>
 
 <?php require_once(ROOT . '/views/layouts/footer.php'); ?>
