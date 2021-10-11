@@ -7,5 +7,6 @@ return [
     'film/([0-9]+)' => 'film/view/$1',
     'film/import' => 'film/import',
     'film/formats' => 'film/formats',
+    'filters/reset' => 'site/filtersReset',
     '' => 'site/index'
 ];

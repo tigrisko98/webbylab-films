@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form class="row g-lg-3" action="#" method="post">
+            <form class="row row g-3" action="" method="post">
                 <div class="col-auto">
                     <label for="title" class="form-label">Title</label>
                     <input type="text" name="title" class="form-control" id="title"
@@ -56,9 +56,16 @@
                 </div>
                 <div class="col-auto">
                     <label for="submit_filters_and_sort" class="form-label" style="visibility: hidden">Submit</label>
-                    <button type="submit" name="submit_filters_and_sort" class="form-control btn btn-primary">Search</button>
+                    <button type="submit" name="submit_filters_and_sort" class="form-control btn btn-primary">Search
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <br>
+                    <a href="filters/reset" class="btn btn-close" data-bs-toggle="tooltip" data-bs-placement="right"
+                       title="Reset filters and sorts"></a>
                 </div>
             </form>
+
             <?php if (!empty($filmsList)): ?>
                 <table class="table">
                     <tr>

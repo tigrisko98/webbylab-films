@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-12">
                 <h3>Edit film «<?php echo $filmData['title']; ?>»</h3>
-                <form action="#" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" id="title"

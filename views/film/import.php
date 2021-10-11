@@ -16,7 +16,7 @@
             <div class="col-12">
                 <h3>Import films</h3>
                 <h6>You can import .txt files!</h6>
-                <form action="#" method="post" enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="file" class="form-label">Import file</label>
                         <input type="file" name="file" class="form-control" id="file" placeholder="" onchange="removeDisabledAttr()">

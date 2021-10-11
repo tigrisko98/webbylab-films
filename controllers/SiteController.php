@@ -13,4 +13,11 @@ class SiteController
         require_once('views/site/index.php');
         return true;
     }
+
+    public function actionFiltersReset()
+    {
+        unset($_POST);
+        header("Location: /");
+        return true;
+    }
 }
