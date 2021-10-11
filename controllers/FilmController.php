@@ -43,6 +43,7 @@ class FilmController
                 } else {
                     $parsedFile = Parser::parseTxtOrDocFile($importFile['file']['tmp_name']);
                 }
+
                 $executeQuery = $films->batchInsert($parsedFile);
 
                 if ($executeQuery !== true) {

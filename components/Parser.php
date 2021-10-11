@@ -19,6 +19,8 @@ class Parser
         }
 
         $dataToInsert = array_chunk($preparedText, 4);
+        $dataToInsert = self::removeInvalidFormats($dataToInsert);
+
         return $dataToInsert;
     }
 
@@ -34,7 +36,7 @@ class Parser
         if (!isset($dataToInsert[1])) {
             return false;
         }
-
+        $dataToInsert = self::removeInvalidFormats($dataToInsert);
         return $dataToInsert;
     }
 
@@ -43,5 +45,17 @@ class Parser
         $fileExtension = pathinfo($importFile['file']['name'], PATHINFO_EXTENSION);
 
         return $fileExtension;
+    }
+
+    private static function removeInvalidFormats(array $dataToInsert): array
+    {
+        foreach ($dataToInsert as $key => $value){
+            if (!in_array(trim($value[2]), ['DVD', 'VHS', 'Blu-Ray'])){
+                unset($dataToInsert[$key]);
+            }
+
+        }
+
+        return $dataToInsert;
     }
 }
