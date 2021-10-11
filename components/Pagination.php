@@ -30,7 +30,7 @@ class Pagination
         $html = '<ul class="pagination">';
         for ($page = $limits[0]; $page <= $limits[1]; $page++) {
             if ($page == $this->current_page) {
-                $links .= '<li class="page-item"><a class="page-link" href="#">' . $page . '</a></li>';
+                $links .= '<li class="page-item"><a class="page-link" href="">' . $page . '</a></li>';
             } else {
                 $links .= $this->generateHtml($page);
             }
@@ -48,7 +48,6 @@ class Pagination
 
         return $html;
     }
-
 
     private function generateHtml($page, $text = null)
     {
@@ -76,7 +75,7 @@ class Pagination
         }
 
         return
-            array($start, $end);
+            [$start, $end];
     }
 
     private function setCurrentPage($currentPage)

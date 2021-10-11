@@ -7,16 +7,16 @@
                 <div class="col-auto">
                     <label for="title" class="form-label">Title</label>
                     <input type="search" name="title" class="form-control searchinput" id="title"
-                           placeholder="Input film title" value="<?php if (isset($_POST['title'])) {
-                        echo $_POST['title'];
+                           placeholder="Input film title" value="<?php if (isset($_SESSION['title'])) {
+                        echo $_SESSION['title'];
                     } ?>">
                     <span class="glyphicon glyphicon-remove-circle searchclear"></span>
                 </div>
                 <div class="col-auto">
                     <label for="stars_list" class="form-label">Stars</label>
                     <input type="search" name="stars_list" class="form-control searchinput" id="stars_list"
-                           placeholder="Input film stars" value="<?php if (isset($_POST['stars_list'])) {
-                        echo $_POST['stars_list'];
+                           placeholder="Input film stars" value="<?php if (isset($_SESSION['stars_list'])) {
+                        echo $_SESSION['stars_list'];
                     } ?>">
                     <span class="glyphicon glyphicon-remove-circle searchclear"></span>
                 </div>
@@ -25,19 +25,19 @@
                     <select class="form-select searchinput" name="sort_field" id="sort_field">
                         <option selected disabled>--Select field to sort--</option>
                         <option value="id"
-                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "id") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['sort_field']) && $_SESSION['sort_field'] == "id") echo 'selected="selected"'; ?>>
                             ID
                         </option>
                         <option value="title"
-                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "title") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['sort_field']) && $_SESSION['sort_field'] == "title") echo 'selected="selected"'; ?>>
                             Title
                         </option>
                         <option value="release_year"
-                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "release_year") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['sort_field']) && $_SESSION['sort_field'] == "release_year") echo 'selected="selected"'; ?>>
                             Release year
                         </option>
                         <option value="stars_list"
-                            <?php if (isset($_POST['sort_field']) && $_POST['sort_field'] == "stars_list") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['sort_field']) && $_SESSION['sort_field'] == "stars_list") echo 'selected="selected"'; ?>>
                             Stars
                         </option>
                     </select>
@@ -47,11 +47,11 @@
                     <select class="form-select" name="direction">
                         <option selected disabled>--Select sort direction--</option>
                         <option value="ASC"
-                            <?php if (isset($_POST['direction']) && $_POST['direction'] == "ASC") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['direction']) && $_SESSION['direction'] == "ASC") echo 'selected="selected"'; ?>>
                             A-Z
                         </option>
                         <option value="DESC"
-                            <?php if (isset($_POST['direction']) && $_POST['direction'] == "DESC") echo 'selected="selected"'; ?>>
+                            <?php if (isset($_SESSION['direction']) && $_SESSION['direction'] == "DESC") echo 'selected="selected"'; ?>>
                             Z-A
                         </option>
                     </select>

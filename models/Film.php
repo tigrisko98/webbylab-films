@@ -105,7 +105,7 @@ class Film
 
     public function filterAndSortByFields(array $filtersAndSortOptions = null, $page = 1): array
     {
-        $sql = "SELECT * FROM $this->table";
+        $sql = "SELECT *, COUNT(*) OVER() AS count FROM $this->table";
         $limit = self::SHOW_BY_DEFAULT;
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
         $values = [];
