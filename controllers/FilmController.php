@@ -15,7 +15,7 @@ class FilmController
         }
 
         if (isset($_POST['submit'])) {
-            $errors = Validator::validateFilm($_POST, $filmsList);
+            $errors = Validator::validateFilm($_POST, $film->getFilmsListWithoutPagination());
             if (empty($errors)) {
                 $film->createFilm($_POST);
 

@@ -22,6 +22,14 @@ class Film
         return $result->fetchAll();
     }
 
+    public function getFilmsListWithoutPagination(): array
+    {
+        $result = $this->db->query("SELECT * FROM $this->table");
+        $result->setFetchMode(PDO::FETCH_ASSOC);
+
+        return $result->fetchAll();
+    }
+
     public function batchInsert(array $parsedData)
     {
         $result = $this->db->prepare("INSERT INTO $this->table "

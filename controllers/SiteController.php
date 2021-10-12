@@ -10,7 +10,7 @@ class SiteController
 
         if (isset($_POST['submit_filters_and_sort']) || !empty($_SESSION)) {
             foreach ($_POST as $key => $value) {
-                $_SESSION[$key] = $value;
+                $_SESSION[$key] = htmlspecialchars($value);
             }
             $filmsList = $films->filterAndSortByFields($_SESSION, $page);
             if(!empty($filmsList)){
