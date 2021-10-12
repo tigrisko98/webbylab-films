@@ -16,13 +16,20 @@ class Film
     {
         $limit = self::SHOW_BY_DEFAULT;
         $offset = ($page - 1) * self::SHOW_BY_DEFAULT;
-        $result = $this->db->query("SELECT * FROM $this->table LIMIT $limit OFFSET $offset");
+
+        $sql = ("SELECT * FROM $this->table LIMIT :limit OFFSET :offset");
+        $result = $this->db->prepare($sql);
+
+        $result->bindParam(':limit', $limit, PDO::PARAM_INT);
+        $result->bindParam(':offset', $offset, PDO::PARAM_INT);
+
+        $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         return $result->fetchAll();
     }
 
-    public function getFilmsListWithoutPagination(): array
+    public function getFilmsListWithoutLimit(): array
     {
         $result = $this->db->query("SELECT * FROM $this->table");
         $result->setFetchMode(PDO::FETCH_ASSOC);
@@ -30,27 +37,24 @@ class Film
         return $result->fetchAll();
     }
 
-    public function batchInsert(array $parsedData)
+    public function getFilmById($id)
     {
-        $result = $this->db->prepare("INSERT INTO $this->table "
-            . '(title, release_year, format, stars_list)'
-            . 'VALUES '
-            . '(?, ?, ?, ?)');
+        $sql = ("SELECT * FROM $this->table WHERE id = ?");
+        $result = $this->db->prepare($sql);
 
+        $result->execute([$id]);
+        $result->setFetchMode(PDO::FETCH_ASSOC);
 
-        $this->db->beginTransaction();
+        return $result->fetch();
+    }
 
-        foreach ($parsedData as $row) {
-            $executions[] = $result->execute($row);
-        }
-
-        if (in_array(true, $executions)) {
-            $this->db->commit();
-        } else {
-            $this->db->rollback();
-            return 'Invalid file.';
-        }
-        return true;
+    public function getTotalFilms(): int
+    {
+        $sql = 'SELECT COUNT(id) AS count FROM `films`';
+        $result = $this->db->prepare($sql);
+        $result->execute();
+        $row = $result->fetch();
+        return $row['count'];
     }
 
     public function createFilm($options): bool
@@ -70,19 +74,8 @@ class Film
         return $result->execute();
     }
 
-    public function getFilmById($id)
-    {
-        if ($id = intval($id)) {
-            $result = $this->db->query("SELECT * FROM $this->table WHERE id=" . $id);
-            $result->setFetchMode(PDO::FETCH_ASSOC);
-
-            return $result->fetch();
-        }
-    }
-
     public function updateFilmById($id, $options): bool
     {
-
         $sql = "UPDATE $this->table SET 
                         title = :title, 
                         release_year = :release_year, 
@@ -98,17 +91,37 @@ class Film
         $result->bindParam(':id', $id, PDO::PARAM_INT);
 
         return $result->execute();
-
     }
 
     public function deleteFilmById($id): bool
     {
-        $sql = "DELETE FROM $this->table WHERE id = :id";
+        $sql = "DELETE FROM $this->table WHERE id = ?";
 
         $result = $this->db->prepare($sql);
-        $result->bindParam(':id', $id, PDO::PARAM_INT);
 
-        return $result->execute();
+        return $result->execute([$id]);
+    }
+
+    public function batchInsert(array $parsedData)
+    {
+        $result = $this->db->prepare("INSERT INTO $this->table "
+            . '(title, release_year, format, stars_list)'
+            . 'VALUES '
+            . '(?, ?, ?, ?)');
+
+        $this->db->beginTransaction();
+
+        foreach ($parsedData as $row) {
+            $executions[] = $result->execute($row);
+        }
+
+        if (in_array(true, $executions)) {
+            $this->db->commit();
+        } else {
+            $this->db->rollback();
+            return 'Invalid file.';
+        }
+        return true;
     }
 
     public function filterAndSortByFields(array $filtersAndSortOptions = null, $page = 1): array
@@ -144,14 +157,5 @@ class Film
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
         return $result->fetchAll();
-    }
-
-    public function getTotalFilms(): int
-    {
-        $sql = 'SELECT COUNT(id) AS count FROM `films`';
-        $result = $this->db->prepare($sql);
-        $result->execute();
-        $row = $result->fetch();
-        return $row['count'];
     }
 }
