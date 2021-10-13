@@ -7,14 +7,14 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h3>Edit film «<?php echo $filmData['title']; ?>»</h3>
+                <h3>Edit film «<?php echo htmlspecialchars($filmData['title']); ?>»</h3>
                 <form action="" method="post" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" id="title"
                                placeholder="Input film title"
                                value="<?php if (isset($_POST['title'])) echo htmlspecialchars($_POST['title']);
-                               else echo $filmData['title']; ?>">
+                               else echo htmlspecialchars($filmData['title']); ?>">
                     </div>
                     <div class="mb-3">
                         <label for="release_year" class="form-label">Release year</label>

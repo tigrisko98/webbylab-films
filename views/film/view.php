@@ -5,7 +5,7 @@
             <div class="col-3">
                 <div class="card" style="width: 36rem;">
                     <div class="card-body">
-                        <h4><?php echo $filmData['title']; ?></h4>
+                        <h4><?php echo htmlspecialchars($filmData['title']); ?></h4>
                         <p class="card-text">Release year: <?php echo $filmData['release_year']; ?></p>
                         <p class="card-text">Format: <?php echo $filmData['format']; ?></p>
                         <p class="card-text">Stars: <?php echo $filmData['stars_list']; ?></p>

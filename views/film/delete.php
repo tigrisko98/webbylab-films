@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row">
-            <p>Are you sure you want to delete film «<?php echo $filmData['title'] ?>
+            <p>Are you sure you want to delete film «<?php echo htmlspecialchars($filmData['title']) ?>
                 »?</p>
             <form action="/film/delete/<?php echo $filmData['id']; ?>" method="post">
                 <a href="/" type="button" class="btn btn-dark">No</a>
