@@ -13,14 +13,14 @@
                         <label for="title" class="form-label">Title</label>
                         <input type="text" name="title" class="form-control" id="title"
                                placeholder="Input film title"
-                               value="<?php if (isset($_POST['title'])) echo $_POST['title'];
+                               value="<?php if (isset($_POST['title'])) echo htmlspecialchars($_POST['title']);
                                else echo $filmData['title']; ?>">
                     </div>
                     <div class="mb-3">
                         <label for="release_year" class="form-label">Release year</label>
                         <input type="text" name="release_year" class="form-control" id="release_year"
                                placeholder="Input film release year"
-                               value="<?php if (isset($_POST['release_year'])) echo $_POST['release_year'];
+                               value="<?php if (isset($_POST['release_year'])) echo htmlspecialchars($_POST['release_year']);
                                else echo $filmData['release_year']; ?>">
                     </div>
                     <div class="mb-3">
@@ -41,7 +41,7 @@
                         <label for="stars_list" class="form-label">Stars list</label>
                         <input type="text" name="stars_list" class="form-control" id="stars_list"
                                placeholder="Input film stars"
-                               value="<?php if (isset($_POST['stars_list'])) echo $_POST['stars_list'];
+                               value="<?php if (isset($_POST['stars_list'])) echo htmlspecialchars($_POST['stars_list']);
                                else echo $filmData['stars_list']; ?>">
                     </div>
                     <input type="submit" name="submit" class="btn btn-primary mb-3" value="Update data">
