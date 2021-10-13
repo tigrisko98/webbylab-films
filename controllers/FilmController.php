@@ -15,6 +15,9 @@ class FilmController
         }
 
         if (isset($_POST['submit'])) {
+            foreach ($_POST as $value) {
+                $value = htmlspecialchars($value);
+            }
             $errors = Validator::validateFilm($_POST, $film->getFilmsListWithoutLimit());
             if (empty($errors)) {
                 $film->createFilm($_POST);
@@ -71,6 +74,9 @@ class FilmController
         }
 
         if (isset($_POST['submit'])) {
+            foreach ($_POST as $value) {
+                $value = htmlspecialchars($value);
+            }
             $errors = Validator::validateFilm($_POST);
             if (empty($errors)) {
                 $film->updateFilmById($id, $_POST);

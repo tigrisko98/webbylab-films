@@ -82,7 +82,7 @@
                     <?php foreach ($filmsList as $film): ?>
                         <tr>
                             <td><?php echo $film['id']; ?></td>
-                            <td><a href="/film/<?php echo $film['id']; ?>"><?php echo $film['title']; ?></a></td>
+                            <td><a href="/film/<?php echo $film['id']; ?>"><?php echo htmlspecialchars($film['title']); ?></a></td>
                             <td><?php echo $film['release_year']; ?></td>
                             <td><?php echo $film['format']; ?></td>
                             <td><?php echo $film['stars_list']; ?></td>
