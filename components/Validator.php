@@ -39,7 +39,8 @@ class Validator
             self::$errors[] = 'Invalid name of the star (stars).';
         }
 
-        $starsList = explode(', ', $options['stars_list']);
+        $starsList = explode(', ', trim($options['stars_list']));
+        $starsList = array_diff(array_map('trim', $starsList), ['']);
         $duplicates = array_unique(array_diff_assoc($starsList, array_unique($starsList)));
         if(!empty($duplicates)){
             self::$errors[] = 'Duplicate found in Stars list field.';
