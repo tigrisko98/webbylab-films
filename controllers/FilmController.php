@@ -41,10 +41,10 @@ class FilmController
 
             if (empty($errors)) {
                 if (Parser::getFileExtension($importFile) == 'csv') {
-                    $parsedFile = Parser::parseCsvFile($importFile['file']['tmp_name']);
+                    $parsedFile = Parser::parseCsvFile($importFile);
                     unset($parsedFile[0]);
                 } else {
-                    $parsedFile = Parser::parseTxtOrDocFile($importFile['file']['tmp_name']);
+                    $parsedFile = Parser::parseTxtOrDocFile($importFile);
                 }
 
                 $executeQuery = $films->batchInsert($parsedFile);

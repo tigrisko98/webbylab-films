@@ -2,31 +2,33 @@
 
 class Parser
 {
-    public static function parseTxtOrDocFile(string $importFile)
+    public static function parseTxtOrDocFile(array $importFile)
     {
-        $fileContent = file_get_contents($importFile);
-        $pos = strpos($fileContent, "Title");
-        $fileContent = substr($fileContent, $pos);
+        if (Parser::getFileExtension($importFile) == 'txt') {
+            $fileContent = file_get_contents($importFile['file']['tmp_name']);
+            $pos = strpos($fileContent, "Title");
+            $fileContent = substr($fileContent, $pos);
 
-        $preparedText = preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent);
+            $preparedText = preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent);
 
-        if (!isset($preparedText[1])) {
-            return false;
+            if (!isset($preparedText[1])) {
+                return false;
+            }
+
+            if (!strlen(trim($preparedText[0]))) {
+                unset($preparedText[0]);
+            }
+
+            $dataToInsert = array_chunk($preparedText, 4);
+            $dataToInsert = self::removeInvalidFormats($dataToInsert);
+
+            return $dataToInsert;
         }
-
-        if (!strlen(trim($preparedText[0]))) {
-            unset($preparedText[0]);
-        }
-
-        $dataToInsert = array_chunk($preparedText, 4);
-        $dataToInsert = self::removeInvalidFormats($dataToInsert);
-
-        return $dataToInsert;
     }
 
-    public static function parseCsvFile(string $importFile)
+    public static function parseCsvFile(array $importFile)
     {
-        if (($fileResource = fopen("{$importFile}", 'r')) !== false) {
+        if (($fileResource = fopen("{$importFile['file']['tmp_name']}", 'r')) !== false) {
             while (($fileData = fgetcsv($fileResource, 1000, ',')) !== false) {
                 $dataToInsert[] = $fileData;
             }
@@ -49,11 +51,10 @@ class Parser
 
     private static function removeInvalidFormats(array $dataToInsert): array
     {
-        foreach ($dataToInsert as $key => $value){
-            if (!in_array(trim($value[2]), ['DVD', 'VHS', 'Blu-Ray'])){
+        foreach ($dataToInsert as $key => $value) {
+            if (!in_array(trim($value[2]), ['DVD', 'VHS', 'Blu-Ray'])) {
                 unset($dataToInsert[$key]);
             }
-
         }
 
         return $dataToInsert;

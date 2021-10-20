@@ -54,7 +54,7 @@ class Validator
             self::$errors[] = 'Invalid file extension.';
         }
 
-        if (Parser::parseTxtOrDocFile($importFile['file']['tmp_name']) === false && Parser::parseCsvFile($importFile['file']['tmp_name']) === false) {
+        if (Parser::parseTxtOrDocFile($importFile) === false && Parser::parseCsvFile($importFile) === false) {
             self::$errors[] = 'No data to import.';
         }
 
