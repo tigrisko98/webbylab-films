@@ -4,7 +4,8 @@ class Parser
 {
     public static function parseTxtOrDocFile(array $importFile)
     {
-        if (Parser::getFileExtension($importFile) == 'txt') {
+        if (Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'doc'
+        || Parser::getFileExtension($importFile) == 'docx') {
             $fileContent = file_get_contents($importFile['file']['tmp_name']);
             $pos = strpos($fileContent, "Title");
             $fileContent = substr($fileContent, $pos);
