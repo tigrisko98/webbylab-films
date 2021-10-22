@@ -7,7 +7,8 @@ class Validator
     public static function validateFilm(array $options, array $filmsList = []): array
     {
         foreach ($filmsList as $film) {
-            if ($options['title'] == trim($film['title'])) {
+            if ($options['title'] == trim($film['title']) && $options['release_year'] == trim($film['release_year'])
+            && $options['format'] == trim($film['format']) && $options['stars_list'] == trim($film['stars_list'])) {
                 self::$errors[] = 'This film is already been added.';
             }
         }

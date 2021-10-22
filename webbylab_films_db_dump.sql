@@ -42,12 +42,8 @@ CREATE TABLE IF NOT EXISTS films
     PRIMARY KEY
 (
     id
-),
-    UNIQUE KEY title
-(
-    title
 )
-    ) ENGINE=InnoDB;
+    ) CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB;
 
 --
 -- Dumping data for table films
@@ -58,8 +54,6 @@ LOCK TABLES films WRITE;
 /*!40000 ALTER TABLE films ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-ALTER TABLE films CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
