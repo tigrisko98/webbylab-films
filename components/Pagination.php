@@ -27,6 +27,11 @@ class Pagination
 
         $limits = $this->limits();
 
+        if ($this->amount < preg_replace("/(\/page-)(\d+)/", '$2', $_SERVER['REQUEST_URI']) ||
+            $_SERVER['REQUEST_URI'] == '/page-0') {
+            return '<script>window.location.href = "/"</script>';
+        }
+
         $html = '<ul class="pagination">';
         for ($page = $limits[0]; $page <= $limits[1]; $page++) {
             if ($page == $this->current_page) {
@@ -56,6 +61,7 @@ class Pagination
 
         $currentURI = rtrim($_SERVER['REQUEST_URI'], '/') . '/';
         $currentURI = preg_replace('~/page-[0-9]+~', '', $currentURI);
+
         return
             '<li class="page-item"><a class="page-link" href="' . $currentURI . $this->index . $page . '">' . $text . '</a></li>';
     }
