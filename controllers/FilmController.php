@@ -34,10 +34,11 @@ class FilmController
     public function actionImport(): bool
     {
         $films = new Film();
+        $filmsList = $films->getFilmsListWithoutLimit();
 
         if (isset($_POST['submit'])) {
             $importFile = $_FILES;
-            $errors = Validator::validateImportFile($importFile);
+            $errors = Validator::validateImportFile($importFile, $filmsList);
 
             if (empty($errors)) {
                 if (Parser::getFileExtension($importFile) == 'csv') {

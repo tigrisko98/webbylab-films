@@ -5,12 +5,12 @@ class Parser
     public static function parseTxtOrDocFile(array $importFile)
     {
         if (Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'doc'
-        || Parser::getFileExtension($importFile) == 'docx') {
+            || Parser::getFileExtension($importFile) == 'docx') {
             $fileContent = file_get_contents($importFile['file']['tmp_name']);
             $pos = strpos($fileContent, "Title");
             $fileContent = substr($fileContent, $pos);
 
-            $preparedText = preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent);
+            $preparedText = array_map('trim', preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent));
 
             if (!isset($preparedText[1])) {
                 return false;
