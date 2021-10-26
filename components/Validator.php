@@ -41,7 +41,7 @@ class Validator
             self::$errors[] = 'Invalid name of the star (stars).';
         }
 
-        $starsList = explode(', ', trim($options['stars_list']));
+        $starsList = explode(',', trim($options['stars_list']));
         $starsList = array_diff(array_map('trim', $starsList), ['']);
         $duplicates = array_unique(array_diff_assoc($starsList, array_unique($starsList)));
         if (!empty($duplicates)) {
@@ -59,25 +59,29 @@ class Validator
         if (Parser::parseTxtOrDocFile($importFile) === false && Parser::parseCsvFile($importFile) === false) {
             self::$errors[] = 'No data to import.';
         }
-
-        if (Parser::getFileExtension($importFile) == 'csv') {
-            foreach (Parser::parseCsvFile($importFile) as $item) {
-                foreach ($filmsList as $film) {
-                    $commonValues = [];
-                    $commonValues = array_intersect($item, $film);
-                    if(count($commonValues) == 4){
-                        self::$errors[] = "You have already been added «$film[title]».";
+        if (Parser::parseTxtOrDocFile($importFile) != false || Parser::parseCsvFile($importFile) != false) {
+            if (Parser::getFileExtension($importFile) == 'csv') {
+                foreach (Parser::parseCsvFile($importFile) as $item) {
+                    foreach ($filmsList as $film) {
+                        $commonValues = [];
+                        $commonValues = array_intersect($item, $film);
+                        if (count($commonValues) == 4) {
+                            self::$errors[] = "You have already been added «$film[title]».";
+                        }
                     }
                 }
             }
-        } else {
-            foreach (Parser::parseTxtOrDocFile($importFile) as $item) {
-                foreach ($filmsList as $film) {
-                    $commonValues = [];
-                    $commonValues = array_intersect($item, $film);
 
-                    if(count($commonValues) == 4){
-                        self::$errors[] = "You have already been added «$film[title]».";
+            if (Parser::getFileExtension($importFile) == 'doc' || Parser::getFileExtension($importFile) == 'docx'
+                || Parser::getFileExtension($importFile) == 'txt') {
+                foreach (Parser::parseTxtOrDocFile($importFile) as $item) {
+                    foreach ($filmsList as $film) {
+                        $commonValues = [];
+                        $commonValues = array_intersect($item, $film);
+
+                        if (count($commonValues) == 4) {
+                            self::$errors[] = "You have already been added «$film[title]».";
+                        }
                     }
                 }
             }
