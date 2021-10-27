@@ -54,10 +54,12 @@ class Validator
     {
         if (!in_array(pathinfo($importFile['file']['name'], PATHINFO_EXTENSION), ['txt', 'doc', 'docx', 'csv'])) {
             self::$errors[] = 'Invalid file extension.';
+            return self::$errors;
         }
 
         if (Parser::parseTxtOrDocFile($importFile) === false && Parser::parseCsvFile($importFile) === false) {
             self::$errors[] = 'No data to import.';
+            return self::$errors;
         }
         if (Parser::parseTxtOrDocFile($importFile) != false || Parser::parseCsvFile($importFile) != false) {
             if (Parser::getFileExtension($importFile) == 'csv') {
