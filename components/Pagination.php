@@ -7,8 +7,9 @@ class Pagination
     private $current_page;
     private $total;
     private $limit;
+    private $filmsList = [];
 
-    public function __construct($total, $currentPage, $limit, $index)
+    public function __construct($total, $currentPage, $limit, $index, $filmsList)
     {
         $this->total = $total;
 
@@ -19,6 +20,9 @@ class Pagination
         $this->amount = $this->amount();
 
         $this->setCurrentPage($currentPage);
+
+        $this->filmsList = $filmsList;
+
     }
 
     public function get()
@@ -29,6 +33,10 @@ class Pagination
 
         if ($this->amount < preg_replace("/(\/page-)(\d+)/", '$2', $_SERVER['REQUEST_URI']) ||
             $_SERVER['REQUEST_URI'] == '/page-0') {
+            return '<script>window.location.href = "/"</script>';
+        }
+
+        if ($this->amount > count($this->filmsList)) {
             return '<script>window.location.href = "/"</script>';
         }
 

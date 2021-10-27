@@ -18,7 +18,7 @@ class SiteController
             }
         }
 
-        $pagination = new Pagination($total, $page, $films::SHOW_BY_DEFAULT, 'page-');
+        $pagination = new Pagination($total, $page, $films::SHOW_BY_DEFAULT, 'page-', $filmsList);
 
         require_once('views/site/index.php');
         return true;
