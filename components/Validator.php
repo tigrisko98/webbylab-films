@@ -7,14 +7,14 @@ class Validator
     public static function validateFilm(array $options, array $filmsList = []): array
     {
         foreach ($filmsList as $film) {
-            if ($options['title'] == trim($film['title']) && $options['release_year'] == trim($film['release_year'])
+            if (trim($options['title']) == trim($film['title']) && trim($options['release_year']) == trim($film['release_year'])
                 && $options['format'] == trim($film['format']) && trim($options['stars_list']) == trim($film['stars_list'])) {
                 self::$errors[] = 'This film is already been added.';
                 break;
             }
         }
 
-        if ((!is_numeric($options['release_year']) && !empty($options['release_year'])) || $options['release_year'] < 0) {
+        if ((!is_numeric(trim($options['release_year'])) && !empty(trim($options['release_year']))) || trim($options['release_year']) < 0) {
             self::$errors[] = 'Release year must be a positive number.';
         }
 

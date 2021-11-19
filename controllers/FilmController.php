@@ -7,7 +7,7 @@ class FilmController
     public function actionCreate(): bool
     {
         $film = new Film();
-        $filmsList = $film->getFilmsList();
+        $filmsList = $film->getFilmsListWithoutLimit();
         $formatsList = $this->actionFormats();
 
         if (!isset($_POST['format'])) {
@@ -18,7 +18,7 @@ class FilmController
             foreach ($_POST as $value) {
                 $value = htmlspecialchars($value);
             }
-            $errors = Validator::validateFilm($_POST, $film->getFilmsListWithoutLimit());
+            $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
                 $film->createFilm($_POST);
 
@@ -66,7 +66,7 @@ class FilmController
     public function actionUpdate($id): bool
     {
         $film = new Film();
-        $filmsList = $film->getFilmsList();
+        $filmsList = $film->getFilmsListWithoutLimit();
         $filmData = $film->getFilmById($id);
         $formatsList = $this->actionFormats();
 
@@ -78,7 +78,7 @@ class FilmController
             foreach ($_POST as $value) {
                 $value = htmlspecialchars($value);
             }
-            $errors = Validator::validateFilm($_POST);
+            $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
                 $film->updateFilmById($id, $_POST);
                 echo '<script>setTimeout(function () {

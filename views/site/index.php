@@ -68,7 +68,7 @@
                 </div>
             </form>
 
-            <?php if (!empty($filmsList)): ?>
+            <?php if (!empty($filmsList[0])): ?>
                 <table class="table">
                     <tr>
                         <th scope="col">ID</th>
@@ -79,7 +79,7 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
-                    <?php foreach ($filmsList as $film): ?>
+                    <?php foreach ($filmsList[0] as $film): ?>
                         <tr>
                             <td><?php echo $film['id']; ?></td>
                             <td><a href="/film/<?php echo $film['id']; ?>"><?php echo htmlspecialchars($film['title']); ?></a></td>
