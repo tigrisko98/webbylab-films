@@ -44,7 +44,7 @@ class FilmController
                 if (Parser::getFileExtension($importFile) == 'csv') {
                     $parsedFile = Parser::parseCsvFile($importFile);
                     unset($parsedFile[0]);
-                } else {
+                } elseif (Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'docx') {
                     $parsedFile = Parser::parseTxtOrDocFile($importFile);
                 }
 
