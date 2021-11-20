@@ -57,11 +57,16 @@ class Validator
             return self::$errors;
         }
 
-        if (Parser::parseTxtOrDocFile($importFile) === false && Parser::parseCsvFile($importFile) === false) {
+        if ((Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'docx' &&
+                Parser::parseTxtOrDocFile($importFile) === false) || (Parser::getFileExtension($importFile) == 'csv' &&
+                Parser::parseCsvFile($importFile) === false)) {
             self::$errors[] = 'No data to import.';
             return self::$errors;
         }
-        if (Parser::parseTxtOrDocFile($importFile) != false || Parser::parseCsvFile($importFile) != false) {
+
+        if ((Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'docx' &&
+                Parser::parseTxtOrDocFile($importFile) != false) || (Parser::getFileExtension($importFile) == 'csv' &&
+                Parser::parseCsvFile($importFile) != false)) {
             if (Parser::getFileExtension($importFile) == 'csv') {
                 foreach (Parser::parseCsvFile($importFile) as $item) {
                     foreach ($filmsList as $film) {
@@ -74,8 +79,7 @@ class Validator
                 }
             }
 
-            if (Parser::getFileExtension($importFile) == 'doc' || Parser::getFileExtension($importFile) == 'docx'
-                || Parser::getFileExtension($importFile) == 'txt') {
+            if (Parser::getFileExtension($importFile) == 'docx' || Parser::getFileExtension($importFile) == 'txt') {
                 foreach (Parser::parseTxtOrDocFile($importFile) as $item) {
                     foreach ($filmsList as $film) {
                         $commonValues = [];

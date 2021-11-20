@@ -9,43 +9,46 @@ class Parser
         }
         if (Parser::getFileExtension($importFile) == 'docx') {
             $content = '';
-
             $zip = zip_open($importFile['file']['tmp_name']);
-            //if (!$zip || is_numeric($zip)) return ['error' => "Cannot open file!"];
 
-            while ($zip_entry = zip_read($zip)) {
-
-                if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
-
-                if (zip_entry_name($zip_entry) != "word/document.xml") continue;
-
-                $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-
-                zip_entry_close($zip_entry);
+            if (is_numeric($zip)) {
+                return false;
             }
-            zip_close($zip);
-            $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-            $content = str_replace('</w:r></w:p>', "\r\n", $content);
-            $fileContent = strip_tags($content);
+                while ($zip_entry = zip_read($zip)) {
+
+                    if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
+
+                    if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+
+                    $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+
+                    zip_entry_close($zip_entry);
+                }
+                zip_close($zip);
+                $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+                $content = str_replace('</w:r></w:p>', "\r\n", $content);
+                $fileContent = strip_tags($content);
+
         }
-        $pos = strpos($fileContent, "Title");
-        $fileContent = substr($fileContent, $pos);
+        if(isset($fileContent)) {
+            $pos = strpos($fileContent, "Title");
+            $fileContent = substr($fileContent, $pos);
 
-        $preparedText = array_map('trim', preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent));
+            $preparedText = array_map('trim', preg_split('/ *(Title|Release Year|Format|Stars): /', $fileContent));
 
-        if (!isset($preparedText[1])) {
-            return false;
+            if (!isset($preparedText[1])) {
+                return false;
+            }
+
+            if (!strlen(trim($preparedText[0]))) {
+                unset($preparedText[0]);
+            }
+
+            $dataToInsert = array_chunk($preparedText, 4);
+            $dataToInsert = self::removeInvalidFormats($dataToInsert);
+
+            return $dataToInsert;
         }
-
-        if (!strlen(trim($preparedText[0]))) {
-            unset($preparedText[0]);
-        }
-
-        $dataToInsert = array_chunk($preparedText, 4);
-        $dataToInsert = self::removeInvalidFormats($dataToInsert);
-
-        return $dataToInsert;
-
     }
 
     public static function parseCsvFile(array $importFile)
