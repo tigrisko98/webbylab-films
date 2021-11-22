@@ -3,7 +3,7 @@
 #### Installation
 - Install php, mysql and pdo-mysql:
 
-    `sudo apt-get install php libapache2-mod-php mysql-server php-pdo-mysql`
+    `sudo apt-get install php libapache2-mod-php mysql-server php-pdo-mysql sudo apt-get install php-zip`
 
 #### Configuration
 - Clone the repository using HTTPS:

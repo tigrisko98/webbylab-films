@@ -57,7 +57,7 @@ class Validator
             return self::$errors;
         }
 
-        if ((Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'docx' &&
+        if (((Parser::getFileExtension($importFile) == 'txt' || Parser::getFileExtension($importFile) == 'docx') &&
                 Parser::parseTxtOrDocFile($importFile) === false) || (Parser::getFileExtension($importFile) == 'csv' &&
                 Parser::parseCsvFile($importFile) === false)) {
             self::$errors[] = 'No data to import.';

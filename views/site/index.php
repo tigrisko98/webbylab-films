@@ -68,7 +68,7 @@
                 </div>
             </form>
 
-            <?php if (!empty($filmsList[0])): ?>
+            <?php if (!empty($filmsList['filmsList'])): ?>
                 <table class="table">
                     <tr>
                         <th scope="col">ID</th>
@@ -79,10 +79,12 @@
                         <th scope="col"></th>
                         <th scope="col"></th>
                     </tr>
-                    <?php foreach ($filmsList[0] as $film): ?>
+                    <?php foreach ($filmsList['filmsList'] as $film): ?>
                         <tr>
                             <td><?php echo $film['id']; ?></td>
-                            <td><a href="/film/<?php echo $film['id']; ?>"><?php echo htmlspecialchars($film['title']); ?></a></td>
+                            <td>
+                                <a href="/film/<?php echo $film['id']; ?>"><?php echo htmlspecialchars($film['title']); ?></a>
+                            </td>
                             <td><?php echo $film['release_year']; ?></td>
                             <td><?php echo $film['format']; ?></td>
                             <td><?php echo $film['stars_list']; ?></td>
@@ -96,20 +98,19 @@
                         </tr>
                     <?php endforeach; ?>
                 </table>
+
+                <?php echo $pagination->get(); ?>
             <?php else: ?>
                 <p>
                     No data to display.
                 </p>
             <?php endif; ?>
-            <?php echo $pagination->get(); ?>
         </div>
     </div>
 </div>
 
 
-
-
-<script>$("#searchclear").click(function(){
+<script>$("#searchclear").click(function () {
         $("#searchinput").val('');
     });</script>
 

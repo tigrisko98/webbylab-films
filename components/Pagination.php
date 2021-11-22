@@ -36,8 +36,8 @@ class Pagination
             return '<script>window.location.href = "/"</script>';
         }
 
-       // if ($this->amount > count($this->filmsList)) {
-            //return '<script>window.location.href = "/"</script>';
+        // if ($this->amount > count($this->filmsList)) {
+        //return '<script>window.location.href = "/"</script>';
         //}
 
         $html = '<ul class="pagination">';

@@ -26,7 +26,7 @@ class Film
         $result->execute();
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
-        return [$result->fetchAll()];
+        return ['filmsList' => $result->fetchAll()];
     }
 
     public function getFilmsListWithoutLimit(): array
@@ -142,6 +142,7 @@ class Film
             }
             $sql = substr($sql, 0, -5);
         }
+        $sql2 = 'SELECT COUNT(id) AS count ' . substr($sql,9);
 
         if (!empty($filtersAndSortOptions['sort_field'])) {
             $sql .= " ORDER BY $filtersAndSortOptions[sort_field]";
@@ -156,12 +157,11 @@ class Film
         $result->execute(array_values($values));
         $result->setFetchMode(PDO::FETCH_ASSOC);
 
-        $sql2 = 'SELECT COUNT(id) AS count FROM `films`';
         $result2 = $this->db->prepare($sql2);
-        $result2->execute();
+        $result2->execute(array_values($values));
         $row = $result2->fetch();
 
-        return [$result->fetchAll(),  $row['count']];
+        return ['filmsList' => $result->fetchAll(), 'count' => $row['count']];
 
     }
 }
