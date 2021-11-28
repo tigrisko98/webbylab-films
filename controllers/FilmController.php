@@ -5,7 +5,7 @@ class FilmController extends FilmBase
     public function actionCreate(): bool
     {
         $filmsList = $this->film->getFilmsListWithoutLimit();
-        $formatsList = $this->actionFormats();
+        $formatsList = $this->formats;
 
         if (!isset($_POST['format'])) {
             $_POST['format'] = '';
@@ -63,7 +63,7 @@ class FilmController extends FilmBase
     {
         $filmsList = $this->film->getFilmsListWithoutLimit();
         $filmData = $this->film->getFilmById($id);
-        $formatsList = $this->actionFormats();
+        $formatsList = $this->formats;
 
         if (!isset($_POST['format'])) {
             $_POST['format'] = $filmData['format'];
@@ -103,10 +103,5 @@ class FilmController extends FilmBase
 
         require_once(ROOT . '/views/film/view.php');
         return true;
-    }
-
-    private function actionFormats(): array
-    {
-        return $this->formats;
     }
 }
