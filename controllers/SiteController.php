@@ -1,6 +1,6 @@
 <?php
 
-class SiteController extends FilmBase
+class SiteController extends FilmBaseController
 {
     public function actionIndex($page = 1): bool
     {

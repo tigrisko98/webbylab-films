@@ -1,6 +1,6 @@
 <?php
 
-class FilmBase
+class FilmBaseController
 {
     protected $formats = ['DVD', 'VHS', 'Blu-Ray'];
 

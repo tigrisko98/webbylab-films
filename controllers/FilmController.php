@@ -1,6 +1,6 @@
 <?php
 
-class FilmController extends FilmBase
+class FilmController extends FilmBaseController
 {
     public function actionCreate(): bool
     {
