@@ -1,13 +1,10 @@
 <?php
 
-class FilmController
+class FilmController extends FilmBase
 {
-    private $formats = ['DVD', 'VHS', 'Blu-Ray'];
-
     public function actionCreate(): bool
     {
-        $film = new Film();
-        $filmsList = $film->getFilmsListWithoutLimit();
+        $filmsList = $this->film->getFilmsListWithoutLimit();
         $formatsList = $this->actionFormats();
 
         if (!isset($_POST['format'])) {
@@ -20,7 +17,7 @@ class FilmController
             }
             $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
-                $film->createFilm($_POST);
+                $this->film->createFilm($_POST);
 
                 echo '<script>setTimeout(function () {
                     window.location.href = "/";  }, 2000);</script>';
@@ -33,8 +30,7 @@ class FilmController
 
     public function actionImport(): bool
     {
-        $films = new Film();
-        $filmsList = $films->getFilmsListWithoutLimit();
+        $filmsList = $this->film->getFilmsListWithoutLimit();
 
         if (isset($_POST['submit'])) {
             $importFile = $_FILES;
@@ -48,7 +44,7 @@ class FilmController
                     $parsedFile = Parser::parseTxtOrDocFile($importFile);
                 }
 
-                $executeQuery = $films->batchInsert($parsedFile);
+                $executeQuery = $this->film->batchInsert($parsedFile);
 
                 if ($executeQuery !== true) {
                     $errors[] = 'Invalid file.';
@@ -65,9 +61,8 @@ class FilmController
 
     public function actionUpdate($id): bool
     {
-        $film = new Film();
-        $filmsList = $film->getFilmsListWithoutLimit();
-        $filmData = $film->getFilmById($id);
+        $filmsList = $this->film->getFilmsListWithoutLimit();
+        $filmData = $this->film->getFilmById($id);
         $formatsList = $this->actionFormats();
 
         if (!isset($_POST['format'])) {
@@ -80,7 +75,7 @@ class FilmController
             }
             $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
-                $film->updateFilmById($id, $_POST);
+                $this->film->updateFilmById($id, $_POST);
                 echo '<script>setTimeout(function () {
                     window.location.href = "/";  }, 2000);</script>';
             }
@@ -92,11 +87,10 @@ class FilmController
 
     public function actionDelete($id): bool
     {
-        $film = new Film();
-        $filmData = $film->getFilmById($id);
+        $filmData = $this->film->getFilmById($id);
 
         if (isset($_POST['submit'])) {
-            $result = $film->deleteFilmById($id);
+            $result = $this->film->deleteFilmById($id);
             header("Location: /");
         }
         require_once(ROOT . '/views/film/delete.php');
@@ -105,14 +99,13 @@ class FilmController
 
     public function actionView($id): bool
     {
-        $film = new Film();
-        $filmData = $film->getFilmById($id);
+        $filmData = $this->film->getFilmById($id);
 
         require_once(ROOT . '/views/film/view.php');
         return true;
     }
 
-    public function actionFormats(): array
+    private function actionFormats(): array
     {
         return $this->formats;
     }
