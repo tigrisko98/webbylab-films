@@ -7,12 +7,11 @@ class FilmController extends FilmBase
         $filmsList = $this->film->getFilmsListWithoutLimit();
         $formatsList = $this->formats;
 
-        if (!isset($_POST['format'])) {
+        if(!isset($_POST['format'])){
             $_POST['format'] = '';
         }
-
         if (isset($_POST['submit'])) {
-            foreach ($_POST as $value) {
+            foreach ($_POST as &$value) {
                 $value = htmlspecialchars($value);
             }
             $errors = Validator::validateFilm($_POST, $filmsList);
@@ -70,7 +69,7 @@ class FilmController extends FilmBase
         }
 
         if (isset($_POST['submit'])) {
-            foreach ($_POST as $value) {
+            foreach ($_POST as &$value) {
                 $value = htmlspecialchars($value);
             }
             $errors = Validator::validateFilm($_POST, $filmsList);
