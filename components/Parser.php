@@ -14,23 +14,23 @@ class Parser
             if (is_numeric($zip)) {
                 return false;
             }
-                while ($zip_entry = zip_read($zip)) {
+            while ($zip_entry = zip_read($zip)) {
 
-                    if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
+                if (zip_entry_open($zip, $zip_entry) == FALSE) continue;
 
-                    if (zip_entry_name($zip_entry) != "word/document.xml") continue;
+                if (zip_entry_name($zip_entry) != "word/document.xml") continue;
 
-                    $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
+                $content .= zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
 
-                    zip_entry_close($zip_entry);
-                }
-                zip_close($zip);
-                $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
-                $content = str_replace('</w:r></w:p>', "\r\n", $content);
-                $fileContent = strip_tags($content);
+                zip_entry_close($zip_entry);
+            }
+            zip_close($zip);
+            $content = str_replace('</w:r></w:p></w:tc><w:tc>', " ", $content);
+            $content = str_replace('</w:r></w:p>', "\r\n", $content);
+            $fileContent = strip_tags($content);
 
         }
-        if(isset($fileContent)) {
+        if (isset($fileContent)) {
             $pos = strpos($fileContent, "Title");
             $fileContent = substr($fileContent, $pos);
 

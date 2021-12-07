@@ -18,8 +18,7 @@ class FilmController extends FilmBaseController
             if (empty($errors)) {
                 $this->film->createFilm($_POST);
 
-                echo '<script>setTimeout(function () {
-                    window.location.href = "/";  }, 2000);</script>';
+                header( "Refresh:2; url=/");
             }
         }
 
@@ -48,8 +47,7 @@ class FilmController extends FilmBaseController
                 if ($executeQuery !== true) {
                     $errors[] = 'Invalid file.';
                 } else {
-                    echo '<script>setTimeout(function () {
-                    window.location.href = "/";  }, 2000);</script>';
+                    header( "Refresh:2; url=/");
                 }
             }
         }
@@ -75,8 +73,8 @@ class FilmController extends FilmBaseController
             $errors = Validator::validateFilm($_POST, $filmsList);
             if (empty($errors)) {
                 $this->film->updateFilmById($id, $_POST);
-                echo '<script>setTimeout(function () {
-                    window.location.href = "/";  }, 2000);</script>';
+
+                header( "Refresh:2; url=/");
             }
         }
 
